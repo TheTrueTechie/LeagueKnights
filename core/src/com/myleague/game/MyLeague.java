@@ -19,7 +19,7 @@ public class MyLeague extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.FIREBRICK);
-		img = new Texture("badlogic.jpg");
+		//img = new Texture("badlogic.jpg");
 		world.create();
 	}
 
@@ -29,7 +29,7 @@ public class MyLeague extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		world.render(batch, img);
+		world.render(batch);
 		font.draw(batch, "LEAGUE KNIGHTS", 300, 400);
 		batch.end();
 	}

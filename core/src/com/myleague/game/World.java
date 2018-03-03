@@ -28,7 +28,7 @@ public class World {
 		
 	}
 	
-	public void render(SpriteBatch batch, Texture img2) {
+	public void render(SpriteBatch batch) {
 		//batch.draw(img2, 50, 50);
 		//sprite.draw(batch);
 		//sprite.setPosition(spriteX, sprite.getY());
