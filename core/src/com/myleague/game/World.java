@@ -21,10 +21,10 @@ public class World {
 	public void create() {
 		player.create();
 		
-		img = new Texture("badlogic.jpg");
+		//img = new Texture("badlogic.jpg");
 
 
-		sprite = new Sprite(img);
+		//sprite = new Sprite(img);
 		
 	}
 	
