@@ -2,13 +2,15 @@ package com.myleague.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Player {
-
+	BitmapFont font;
 	TextureAtlas knightIdleAtlas;
 	TextureAtlas knightWalkAtlas;
 	TextureAtlas knightSlashAtlas;
@@ -16,7 +18,7 @@ public class Player {
 	Animation<TextureRegion> knightWalkAnim;
 	Animation<TextureRegion> knightSlashAnim;
 	float elapsedTime = 0;
-
+	float health = 100;
 	int x = 0;
 	int y = 20;
 	String anim = "walk_left";
@@ -29,12 +31,16 @@ public class Player {
 		knightIdleAnim = new Animation<TextureRegion>(1 / 4f, knightIdleAtlas.getRegions());
 		knightWalkAnim = new Animation<TextureRegion>(1 / 8f, knightWalkAtlas.getRegions());
 		knightSlashAnim = new Animation<TextureRegion>(1 / 10f, knightSlashAtlas.getRegions());
+
+		font = new BitmapFont();
+		font.setColor(Color.RED);
 	}
 
 	public void render(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 
 		batch.draw(getAnimation(), x, y, 128, 128);
+		font.draw(batch, "HEALTH: " + health, 10, 590);
 		controls();
 	}
 

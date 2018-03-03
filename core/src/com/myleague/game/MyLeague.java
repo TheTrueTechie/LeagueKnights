@@ -30,13 +30,13 @@ public class MyLeague extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		world.render(batch);
-		font.draw(batch, "LEAGUE KNIGHTS", 300, 400);
+		//font.draw(batch, "LEAGUE KNIGHTS", 300, 400);
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		//img.dispose();
 	}
 }
