@@ -1,0 +1,75 @@
+
+knight_slash.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+0001
+  rotate: false
+  xy: 1, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0002
+  rotate: false
+  xy: 80, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0003
+  rotate: false
+  xy: 160, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0004
+  rotate: false
+  xy: 240, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0005
+  rotate: false
+  xy: 320, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0006
+  rotate: false
+  xy: 400, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0007
+  rotate: false
+  xy: 480, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0008
+  rotate: false
+  xy: 560, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0009
+  rotate: false
+  xy: 640, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0010
+  rotate: false
+  xy: 720, 38
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1

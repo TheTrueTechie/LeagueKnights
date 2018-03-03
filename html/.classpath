@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="/MyLeague-core"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-gwt/1.9.8/df9e0587c1642bacae82ebb2cdfc1aff16c4a9f0/gdx-backend-gwt-1.9.8.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-gwt/1.9.8/1085871b7ac411d806ed68e3430b8a9bc72bb570/gdx-backend-gwt-1.9.8-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-gwt/1.9.8/1085871b7ac411d806ed68e3430b8a9bc72bb570/gdx-backend-gwt-1.9.8-sources.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-gwt/1.9.8/1085871b7ac411d806ed68e3430b8a9bc72bb570/gdx-backend-gwt-1.9.8-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.8/bac17f395be5010619b31280fe84e9f53118d0b9/gdx-1.9.8-sources.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.8/bac17f395be5010619b31280fe84e9f53118d0b9/gdx-1.9.8-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.8/a35a0076fbce873f9c2d5a1a1c8066244231bb3c/gdx-1.9.8.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.8/bac17f395be5010619b31280fe84e9f53118d0b9/gdx-1.9.8-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.8/1fd1df309f965e52196900b270afc2bcd0acd0a2/gdx-box2d-1.9.8-sources.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.8/1fd1df309f965e52196900b270afc2bcd0acd0a2/gdx-box2d-1.9.8-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.8/6f0497b7958216464101adfb7bdc3a0f7b88d6d3/gdx-box2d-1.9.8.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.8/1fd1df309f965e52196900b270afc2bcd0acd0a2/gdx-box2d-1.9.8-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-gwt/1.9.8/fd68dee8f49aa339e64e6c302b0dc28ac9e66d26/gdx-box2d-gwt-1.9.8-sources.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-gwt/1.9.8/fd68dee8f49aa339e64e6c302b0dc28ac9e66d26/gdx-box2d-gwt-1.9.8-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.8.0/154b2fbb50894a944607cd74f7dba1073d31a967/gdx-ai-1.8.0-sources.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.8.0/154b2fbb50894a944607cd74f7dba1073d31a967/gdx-ai-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.8.0/ec30677d8ab1a8b8aa4b853c5f4e4b1361f50bf5/gdx-ai-1.8.0.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.8.0/154b2fbb50894a944607cd74f7dba1073d31a967/gdx-ai-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.box2dlights/box2dlights/1.4/57a1f15112328706c648a430bd19574118e2d8f4/box2dlights-1.4-sources.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.box2dlights/box2dlights/1.4/57a1f15112328706c648a430bd19574118e2d8f4/box2dlights-1.4-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.box2dlights/box2dlights/1.4/3d77ad5b4164fb32fc67e2446e35911bb0aaf0bd/box2dlights-1.4.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.badlogicgames.box2dlights/box2dlights/1.4/57a1f15112328706c648a430bd19574118e2d8f4/box2dlights-1.4-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-servlet/2.8.0/8fba7d39f9a341892cda502aacb2f5287bd49309/gwt-servlet-2.8.0.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-servlet/2.8.0/f2ea4f4762b01d4df035582a29524acea5a5403e/gwt-servlet-2.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="/Users/league/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-codeserver/2.8.0/6c1bec5a7a57b4ba292eb958e61463ee61727369/gwt-codeserver-2.8.0.jar" sourcepath="/Users/league/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-codeserver/2.8.0/b37ef2b3f44e196353d0e65d946a575b8f5ebe82/gwt-codeserver-2.8.0-sources.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>

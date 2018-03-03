@@ -1,0 +1,33 @@
+
+knight_idle.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+0001
+  rotate: false
+  xy: 1, 1
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0002
+  rotate: false
+  xy: 43, 1
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0003
+  rotate: false
+  xy: 85, 1
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+0004
+  rotate: false
+  xy: 127, 1
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
