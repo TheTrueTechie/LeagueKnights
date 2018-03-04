@@ -20,10 +20,10 @@ public class Player {
 	float elapsedTime = 0;
 	float health = 100;
 	boolean isFacingRight = true;
+	int attackTimer = 50;
 	int x = 0;
 	int y = 20;
-	String anim = "walk_left";
-	
+	String anim = "idle";
 
 	public void create() {
 		knightIdleAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_idle.atlas"));
@@ -40,54 +40,57 @@ public class Player {
 	public void render(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 
+		controls();
 		batch.draw(getAnimation(), x, y, 128, 128);
 		font.draw(batch, "HEALTH: " + health, 10, 590);
-		controls();
+		attackTimer--;
 	}
 
 	public TextureRegion getAnimation() {
 		// System.out.println(anim);
 		TextureRegion ret;
 		if (anim.equals("attack")) {
-			ret = knightSlashAnim.getKeyFrame(elapsedTime, true);
+			ret = knightSlashAnim.getKeyFrame(elapsedTime, false);
 		} else if (anim.equals("walk_right")) {
 			isFacingRight = true;
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
-			if(ret.isFlipX()) {
-				ret.flip(true, false);
-			}
 		} else if (anim.equals("walk_left")) {
 			isFacingRight = false;
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
-			if(!ret.isFlipX()) {
-				ret.flip(true, false);
-			}
-		} else if (anim.equals("idle")) {
-			ret = knightIdleAnim.getKeyFrame(elapsedTime, true);
 		} else {
-			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
+			ret = knightIdleAnim.getKeyFrame(elapsedTime, true);
 		}
-		if(!isFacingRight )
+
+		if (!isFacingRight && !ret.isFlipX()) {
+			ret.flip(true, false);
+		} else if (isFacingRight && ret.isFlipX()) {
+			ret.flip(true, false);
+		}
 		return ret;
 	}
 
 	public void controls() {
 		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			anim = "attack";
-		} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			anim = "walk_left";
-			if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
-				x -= 2;
-			else
-				x -= 1;
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			anim = "walk_right";
-			if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
-				x += 2;
-			else
-				x += 1;
-		} else {
-			anim = "idle";
+			attackTimer = 50;
+			elapsedTime = 0;
+		}
+		if (attackTimer < 0) {
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				anim = "walk_left";
+				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
+					x -= 2;
+				else
+					x -= 1;
+			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				anim = "walk_right";
+				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
+					x += 2;
+				else
+					x += 1;
+			} else {
+				anim = "idle";
+			}
 		}
 	}
 }
