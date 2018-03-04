@@ -22,6 +22,7 @@ public class MyLeague extends ApplicationAdapter {
 		font.setColor(Color.FIREBRICK);
 		//img = new Texture("badlogic.jpg");
 		world.create();
+		SoundHandler.init();
 	}
 
 	@Override

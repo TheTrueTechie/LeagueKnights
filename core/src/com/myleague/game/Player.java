@@ -113,6 +113,7 @@ public class Player {
 			anim = "attack";
 			attackTimer = 50;
 			elapsedTime = 0;
+			SoundHandler.playSlash();
 		}
 		if (attackTimer < 0) {
 			int move = 0;
