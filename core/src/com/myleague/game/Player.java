@@ -19,6 +19,7 @@ public class Player {
 	Animation<TextureRegion> knightSlashAnim;
 	float elapsedTime = 0;
 	float health = 100;
+	boolean isFacingRight = true;
 	int x = 0;
 	int y = 20;
 	String anim = "walk_left";
@@ -50,11 +51,13 @@ public class Player {
 		if (anim.equals("attack")) {
 			ret = knightSlashAnim.getKeyFrame(elapsedTime, true);
 		} else if (anim.equals("walk_right")) {
+			isFacingRight = true;
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
 			if(ret.isFlipX()) {
 				ret.flip(true, false);
 			}
 		} else if (anim.equals("walk_left")) {
+			isFacingRight = false;
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
 			if(!ret.isFlipX()) {
 				ret.flip(true, false);
@@ -64,6 +67,7 @@ public class Player {
 		} else {
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
 		}
+		if(!isFacingRight )
 		return ret;
 	}
 
