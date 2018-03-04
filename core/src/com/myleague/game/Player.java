@@ -14,13 +14,15 @@ public class Player {
 	TextureAtlas knightIdleAtlas;
 	TextureAtlas knightWalkAtlas;
 	TextureAtlas knightSlashAtlas;
+	TextureAtlas knightDeathAtlas;
 	Animation<TextureRegion> knightIdleAnim;
 	Animation<TextureRegion> knightWalkAnim;
 	Animation<TextureRegion> knightSlashAnim;
+	Animation<TextureRegion> knightDeathAnim;
 	float elapsedTime = 0;
 	float health = 100;
 	boolean isFacingRight = true;
-	int attackTimer = 50;
+	int attackTimer = 0;
 	int x = 0;
 	int y = 20;
 	String anim = "idle";
@@ -29,9 +31,11 @@ public class Player {
 		knightIdleAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_idle.atlas"));
 		knightWalkAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_walk.atlas"));
 		knightSlashAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_slash.atlas"));
+		knightDeathAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_death.atlas"));
 		knightIdleAnim = new Animation<TextureRegion>(1 / 4f, knightIdleAtlas.getRegions());
 		knightWalkAnim = new Animation<TextureRegion>(1 / 8f, knightWalkAtlas.getRegions());
 		knightSlashAnim = new Animation<TextureRegion>(1 / 10f, knightSlashAtlas.getRegions());
+		knightDeathAnim = new Animation<TextureRegion>(1 / 9f, knightDeathAtlas.getRegions());
 
 		font = new BitmapFont();
 		font.setColor(Color.RED);
@@ -57,6 +61,8 @@ public class Player {
 		} else if (anim.equals("walk_left")) {
 			isFacingRight = false;
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
+		} else if (anim.equals("death")) {
+			ret = knightDeathAnim.getKeyFrame(elapsedTime, true);
 		} else {
 			ret = knightIdleAnim.getKeyFrame(elapsedTime, true);
 		}
