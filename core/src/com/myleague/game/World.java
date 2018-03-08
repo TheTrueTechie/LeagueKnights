@@ -14,7 +14,7 @@ public class World {
 	Texture bgHills;
 	
 	
-	
+	int bgWidth = 1600;
 	int hillsX = 0;
 	
 	public void create() {
@@ -32,8 +32,8 @@ public class World {
 	public void render(SpriteBatch batch) {
 		batch.draw(bgMountain, player.getX()-560, player.getY()-60, 1280, 720);
 		moveBackGround(player.getX());
-		batch.draw(bgHills, hillsX, player.getY()-60, 1600, 900);
-		batch.draw(bgHills, hillsX-1600, player.getY()-60, 1600, 900);
+		batch.draw(bgHills, hillsX, player.getY()-60, bgWidth, 900);
+		batch.draw(bgHills, hillsX-1600, player.getY()-60, bgWidth, 900);
 		//batch.draw(img2, 50, 50);
 		//sprite.draw(batch);
 		//sprite.setPosition(spriteX, sprite.getY());
@@ -42,6 +42,6 @@ public class World {
 	}
 	
 	public void moveBackGround(int px) {
-		hillsX = px-(int)((px%4000)*0.2);
+		hillsX = px-(int)( (px% ((bgWidth/2)/0.2) )*0.2);
 	}
 }
