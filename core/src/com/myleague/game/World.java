@@ -10,17 +10,18 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class World {
 	Player player = new Player();
-	// Dep
-	Texture img;
-	Sprite sprite;
-	float elapsedTime = 0;
-	// End Dep
+	Texture bgMountain;
+	Texture bgHills;
 	
-	int spriteX = 0;
+	
+	
+	int hillsX = 0;
 	
 	public void create() {
 		player.create();
-		
+
+		bgMountain = new Texture("tileset/parallax-mountain-bg.png");
+		bgHills = new Texture("tileset/parallax-mountain-mountains.png");
 		//img = new Texture("badlogic.jpg");
 
 
@@ -29,10 +30,18 @@ public class World {
 	}
 	
 	public void render(SpriteBatch batch) {
+		batch.draw(bgMountain, player.getX()-560, player.getY()-60, 1280, 720);
+		moveBackGround(player.getX());
+		batch.draw(bgHills, hillsX, player.getY()-60, 1600, 900);
+		batch.draw(bgHills, hillsX-1600, player.getY()-60, 1600, 900);
 		//batch.draw(img2, 50, 50);
 		//sprite.draw(batch);
 		//sprite.setPosition(spriteX, sprite.getY());
 		//spriteX++;
 		player.render(batch);
+	}
+	
+	public void moveBackGround(int px) {
+		hillsX = px-(int)((px%4000)*0.2);
 	}
 }

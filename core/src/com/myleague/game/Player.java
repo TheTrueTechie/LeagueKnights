@@ -57,7 +57,7 @@ public class Player {
 		font.draw(batch, "HEALTH: " + health, x, 590);
 		attackTimer--;
 		
-		System.out.println("Player: (" + x + "," + y +"), MouseX: " + Gdx.input.getX() );
+		//System.out.println("Player: (" + x + "," + y +"), MouseX: " + Gdx.input.getX() );
 	}
 
 	public TextureRegion getAnimation() {
@@ -120,13 +120,13 @@ public class Player {
 			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 				anim = "walk";
 				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) 
-					move = walkSpeed*-2;
+					move = walkSpeed*-8;
 				else
 					move = -walkSpeed;
 			} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 				anim = "walk";
 				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
-					move = walkSpeed*2;
+					move = walkSpeed*8;
 				else
 					move = walkSpeed;
 			} else {
@@ -139,7 +139,7 @@ public class Player {
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			camera.translate(2, 0);
-			System.out.println(camera.position);
+			//System.out.println(camera.position);
 		}
 		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			camera.translate(-2, 0);
@@ -152,5 +152,13 @@ public class Player {
 		else {
 			isFacingRight = false;
 		}
+	}
+	
+	public int getX() {
+		return this.x;
+	}
+	
+	public int getY() {
+		return this.y;
 	}
 }
