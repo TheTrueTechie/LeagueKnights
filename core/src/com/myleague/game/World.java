@@ -13,7 +13,6 @@ public class World {
 	Texture bgMountain;
 	Texture bgHills;
 	Texture bgTrees;
-	Menu pause;
 	
 	int bgWidth = 1600;
 	int hillsX = 0;
@@ -22,8 +21,6 @@ public class World {
 	public void create() {
 		player.create();
 
-		pause = new Menu();
-		pause.create();
 		
 		bgMountain = new Texture("tileset/parallax-mountain-bg.png");
 		bgHills = new Texture("tileset/parallax-mountain-mountains.png");
@@ -49,7 +46,6 @@ public class World {
 		//sprite.setPosition(spriteX, sprite.getY());
 		//spriteX++;
 		player.render(batch);
-		pause.render(batch);
 	}
 	
 	public void moveBackGround(int px) {

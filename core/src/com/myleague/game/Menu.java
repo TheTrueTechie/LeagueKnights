@@ -2,6 +2,7 @@ package com.myleague.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,19 +17,51 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class Menu {
+	MyLeague game;
 	Stage stage;
-	TextButton test;
+	TextButton textButton;
+	TextButton genericButton;
 	TextButtonStyle buttonStyle;
 	BitmapFont font;
 	Skin skin;
 	TextureAtlas buttonAtlas;
 	Animation<TextureRegion> buttonAnim;
 	
-	public void create() {
+	public void create(MyLeague league) {
+		game = league;
 		stage = new Stage();
 		font = new BitmapFont();
 		skin = new Skin();
 		Gdx.input.setInputProcessor(stage);
+		createGenericButton();
+		
+	}
+	
+	public void createGenericButton() {
+		skin.add("default",  font);
+		
+		 //Create a texture
+		  Pixmap pixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
+		  pixmap.setColor(Color.WHITE);
+		  pixmap.fill();
+		  skin.add("background",new Texture(pixmap));
+		  skin.add("default", font);
+		  
+		  //Create a button style
+		  TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+		  textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
+		  textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
+		  //textButtonStyle.checked = skin.newDrawable("background", Color.DARK_GRAY);
+		  textButtonStyle.over = skin.newDrawable("background", Color.LIGHT_GRAY);
+		  textButtonStyle.font = skin.getFont("default");
+		  skin.add("default", textButtonStyle);
+		  
+		  genericButton = new TextButton("New game", skin); // Use the initialized skin
+		  genericButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2);
+	      stage.addActor(genericButton);
+	}
+	
+	public void createTextButton() {
 		buttonAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/npc.atlas"));
 		buttonAnim = new Animation<TextureRegion>(1f, buttonAtlas.getRegions());
 		
@@ -40,16 +73,24 @@ public class Menu {
 		buttonStyle.down = new TextureRegionDrawable(buttonAnim.getKeyFrame(0f, false));
 		buttonStyle.checked = new TextureRegionDrawable(buttonAnim.getKeyFrame(1f, false));
 		//buttonStyle.over = skin.newDrawable("background", Color.BLUE);
-        test = new TextButton("Test Button", buttonStyle);
-        test.setBounds(0, 0, 200, 200);
+        textButton = new TextButton("Test Button", buttonStyle);
+        textButton.setBounds(0, 0, 200, 200);
         //ImageButton btn = new ImageButton();
-        stage.addActor(test);
+        stage.addActor(textButton);
 	}
 	
 	public void render(SpriteBatch batch) {
 		stage.act();
 		stage.draw();
+		getButtonInput();
 		//test.draw(batch, 1);
 		//batch.draw(buttonAnim.getKeyFrame(0, false), 0, 0, 16, 16);
+	}
+	
+	public void getButtonInput() {
+		if(genericButton.isPressed()) {
+			System.out.println("PRESSED!");
+			game.startGame();
+		}
 	}
 }

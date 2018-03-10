@@ -14,32 +14,47 @@ public class MyLeague extends ApplicationAdapter {
 	BitmapFont font;
 	Texture img;
 	World world = new World();
-	
+	Menu startMenu;
+
+	boolean gameIsStarted = false;
+
 	@Override
-	public void create () {
+	public void create() {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.FIREBRICK);
-		//img = new Texture("badlogic.jpg");
-		world.create();
-		SoundHandler.init();
+		// img = new Texture("badlogic.jpg");
+
+		startMenu = new Menu();
+		startMenu.create(this);
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		Gdx.graphics.setTitle("FPS : " + Gdx.graphics.getFramesPerSecond());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
 		batch.begin();
-		world.render(batch);
-		//font.draw(batch, "LEAGUE KNIGHTS", 300, 400);
+		if (gameIsStarted) {
+			world.render(batch);
+		}
+		else {
+			startMenu.render(batch);
+		}
+		// font.draw(batch, "LEAGUE KNIGHTS", 300, 400);
 		batch.end();
 	}
-	
+
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
-		//img.dispose();
+		// img.dispose();
+	}
+
+	public void startGame() {
+		world.create();
+		SoundHandler.init();
+		gameIsStarted = true;
 	}
 }
