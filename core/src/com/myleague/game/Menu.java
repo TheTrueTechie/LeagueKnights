@@ -90,8 +90,6 @@ public class Menu {
 		stage.act();
 		stage.draw();
 		getButtonInput();
-		//test.draw(batch, 1);
-		//batch.draw(buttonAnim.getKeyFrame(0, false), 0, 0, 16, 16);
 	}
 	
 	public void getButtonInput() {
