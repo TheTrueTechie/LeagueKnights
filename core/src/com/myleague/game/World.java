@@ -12,16 +12,22 @@ public class World {
 	Player player = new Player();
 	Texture bgMountain;
 	Texture bgHills;
-	
+	Texture bgTrees;
+	Menu pause;
 	
 	int bgWidth = 1600;
 	int hillsX = 0;
+	int treesX = 0;
 	
 	public void create() {
 		player.create();
 
+		pause = new Menu();
+		pause.create();
+		
 		bgMountain = new Texture("tileset/parallax-mountain-bg.png");
 		bgHills = new Texture("tileset/parallax-mountain-mountains.png");
+		bgTrees = new Texture("tileset/parallax-mountain-trees.png");
 		//img = new Texture("badlogic.jpg");
 
 
@@ -34,14 +40,20 @@ public class World {
 		moveBackGround(player.getX());
 		batch.draw(bgHills, hillsX, player.getY()-60, bgWidth, 900);
 		batch.draw(bgHills, hillsX-1600, player.getY()-60, bgWidth, 900);
+		
+		batch.draw(bgTrees, treesX, player.getY()-30, bgWidth, 900);
+		batch.draw(bgTrees, treesX-1600, player.getY()-30, bgWidth, 900);
+
 		//batch.draw(img2, 50, 50);
 		//sprite.draw(batch);
 		//sprite.setPosition(spriteX, sprite.getY());
 		//spriteX++;
 		player.render(batch);
+		pause.render(batch);
 	}
 	
 	public void moveBackGround(int px) {
 		hillsX = px-(int)( (px% ((bgWidth/2)/0.2) )*0.2);
+		treesX = px-(int)( (px% ((bgWidth/2)/0.4) )*0.4);
 	}
 }
