@@ -37,6 +37,10 @@ public class Menu {
 		
 	}
 	
+	/**
+	 * Functional (albiet generic) button creation
+	 * 
+	 */
 	public void createGenericButton() {
 		skin.add("default",  font);
 		
@@ -61,6 +65,9 @@ public class Menu {
 	      stage.addActor(genericButton);
 	}
 	
+	/**
+	 * Non-functional button creation
+	 */
 	public void createTextButton() {
 		buttonAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/npc.atlas"));
 		buttonAnim = new Animation<TextureRegion>(1f, buttonAtlas.getRegions());
