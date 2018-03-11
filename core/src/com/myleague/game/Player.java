@@ -54,7 +54,7 @@ public class Player {
 		controlsMKB();
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
-		font.draw(batch, "HEALTH: " + health, x, 590);
+		font.draw(batch, "HEALTH: " + health, x+25, 500);
 		attackTimer--;
 		
 		//System.out.println("Player: (" + x + "," + y +"), MouseX: " + Gdx.input.getX() );
