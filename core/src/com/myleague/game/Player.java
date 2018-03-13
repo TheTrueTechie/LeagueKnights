@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
 
 public class Player {
@@ -31,6 +33,7 @@ public class Player {
 	int x = 0;
 	int y = 0;
 	String anim = "idle";
+	ShapeRenderer sr;
 
 	public void create() {
 		knightIdleAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_idle.atlas"));
@@ -46,7 +49,10 @@ public class Player {
 		camera.translate(80, 300);
 		camera.update();
 
-		
+		sr = new ShapeRenderer();
+		sr.setProjectionMatrix(camera.combined);
+		sr.begin(ShapeType.Line);
+
 		font = new BitmapFont();
 		font.setColor(Color.RED);
 	}
@@ -56,10 +62,12 @@ public class Player {
 		controlsMKB();
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
-		font.draw(batch, "HEALTH: " + health, x+25, 500);
+		font.draw(batch, "HEALTH: " + health, x + 25, 500);
 		attackTimer--;
-		
-		//System.out.println("Player: (" + x + "," + y +"), MouseX: " + Gdx.input.getX() );
+
+		drawShapes(batch);
+		// System.out.println("Player: (" + x + "," + y +"), MouseX: " +
+		// Gdx.input.getX() );
 	}
 
 	public TextureRegion getAnimation() {
@@ -85,6 +93,18 @@ public class Player {
 		return ret;
 	}
 
+	public void drawShapes(SpriteBatch batch) {
+		batch.end();
+		// camera.update();
+
+		// sr.setColor(1, 1, 0, 1);
+		sr.line(x, y, x + 100, y + 100);
+		sr.rect(x, y, 100, 100);
+		// sr.circle(x, y, 100);
+		// sr.end();
+		batch.begin();
+	}
+
 	public void controlsKB() {
 		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			anim = "attack";
@@ -97,8 +117,7 @@ public class Player {
 				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 					anim = "run";
 					x -= 2;
-				}
-				else {
+				} else {
 					anim = "walk";
 					x -= 1;
 				}
@@ -107,8 +126,7 @@ public class Player {
 				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 					anim = "run";
 					x += 2;
-				}
-				else {
+				} else {
 					anim = "walk";
 					x += 1;
 				}
@@ -117,7 +135,7 @@ public class Player {
 			}
 		}
 	}
-	
+
 	public void controlsMKB() {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			anim = "attack";
@@ -130,50 +148,46 @@ public class Player {
 			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
 					anim = "walk";
-					move = walkSpeed*-8;
-				}
-				else {
+					move = walkSpeed * -8;
+				} else {
 					anim = "run";
 					move = -walkSpeed;
 				}
 			} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
 					anim = "walk";
-					move = walkSpeed*8;
-				}
-				else {
+					move = walkSpeed * 8;
+				} else {
 					anim = "run";
 					move = walkSpeed;
 				}
 			} else {
 				anim = "idle";
 			}
-			
+
 			x += move;
 			camera.translate(move, 0);
 		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			camera.translate(2, 0);
-			//System.out.println(camera.position);
-		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			// System.out.println(camera.position);
+		} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			camera.translate(-2, 0);
 		}
 		camera.update();
-		
-		if(Gdx.input.getX() > 625) {
+
+		if (Gdx.input.getX() > Gdx.graphics.getWidth()/2) {
 			isFacingRight = true;
-		}
-		else {
+		} else {
 			isFacingRight = false;
 		}
 	}
-	
+
 	public int getX() {
 		return this.x;
 	}
-	
+
 	public int getY() {
 		return this.y;
 	}
