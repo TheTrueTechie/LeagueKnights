@@ -20,6 +20,7 @@ public class Player {
 	TextureAtlas knightDeathAtlas;
 	Animation<TextureRegion> knightIdleAnim;
 	Animation<TextureRegion> knightWalkAnim;
+	Animation<TextureRegion> knightRunAnim;
 	Animation<TextureRegion> knightSlashAnim;
 	Animation<TextureRegion> knightDeathAnim;
 	float elapsedTime = 0;
@@ -38,6 +39,7 @@ public class Player {
 		knightDeathAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_death.atlas"));
 		knightIdleAnim = new Animation<TextureRegion>(1 / 4f, knightIdleAtlas.getRegions());
 		knightWalkAnim = new Animation<TextureRegion>(1 / 8f, knightWalkAtlas.getRegions());
+		knightRunAnim = new Animation<TextureRegion>(1 / 4f, knightWalkAtlas.getRegions());
 		knightSlashAnim = new Animation<TextureRegion>(1 / 10f, knightSlashAtlas.getRegions());
 		knightDeathAnim = new Animation<TextureRegion>(1 / 9f, knightDeathAtlas.getRegions());
 		camera = new OrthographicCamera(1280, 720);
@@ -67,6 +69,8 @@ public class Player {
 			ret = knightSlashAnim.getKeyFrame(elapsedTime, false);
 		} else if (anim.equals("walk")) {
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
+		} else if (anim.equals("run")) {
+			ret = knightRunAnim.getKeyFrame(elapsedTime, true);
 		} else if (anim.equals("death")) {
 			ret = knightDeathAnim.getKeyFrame(elapsedTime, true);
 		} else {
@@ -89,19 +93,25 @@ public class Player {
 		}
 		if (attackTimer < 0) {
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-				anim = "walk";
 				isFacingRight = false;
-				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
+				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+					anim = "run";
 					x -= 2;
-				else
+				}
+				else {
+					anim = "walk";
 					x -= 1;
+				}
 			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				anim = "walk";
 				isFacingRight = true;
-				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
+				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+					anim = "run";
 					x += 2;
-				else
+				}
+				else {
+					anim = "walk";
 					x += 1;
+				}
 			} else {
 				anim = "idle";
 			}
@@ -118,17 +128,23 @@ public class Player {
 		if (attackTimer < 0) {
 			int move = 0;
 			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				anim = "walk";
-				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) 
+				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+					anim = "walk";
 					move = walkSpeed*-8;
-				else
+				}
+				else {
+					anim = "run";
 					move = -walkSpeed;
+				}
 			} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				anim = "walk";
-				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+					anim = "walk";
 					move = walkSpeed*8;
-				else
+				}
+				else {
+					anim = "run";
 					move = walkSpeed;
+				}
 			} else {
 				anim = "idle";
 			}
