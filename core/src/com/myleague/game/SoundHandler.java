@@ -11,6 +11,7 @@ public class SoundHandler {
 	private static Music piano = Gdx.audio.newMusic(Gdx.files.internal("sounds/piano.mp3"));
 	
 	private static Sound slash = Gdx.audio.newSound(Gdx.files.internal("sounds/slash.wav"));
+	private static long slashID = 0;
 	
 	public static void init() {
 		piano.setLooping(true);
@@ -18,6 +19,7 @@ public class SoundHandler {
 	}
 	
 	public static void playSlash() {
+		slash.stop();
 		long id = slash.play();
 		//slash.setPitch(id,getRandomPitch());
 		//slash.dispose();
