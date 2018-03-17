@@ -16,14 +16,31 @@ public class KnightInputProcessor implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
-				return false;
+		if (player.attackTimer < 0) {
+			int move = player.velocity;
+			if (keycode == Input.Keys.A) {
+				move = -1;
+			} else if (keycode == Input.Keys.D) {
+				move = 1;
+			}
+			player.setVelocity(move);
+		}
+		
+		
+		if(keycode == 59) {
+			player.setSprintValue(8);
+		}
+		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
 		// TODO Auto-generated method stub
+		System.out.println("Key up! " + keycode);
 		if (keycode == Input.Keys.A || keycode == Input.Keys.D) {
-			player.idleTimer = 0;
+			player.setVelocity(0);
+		} if(keycode == 59) {
+			player.setSprintValue(1);
 		}
 		return false;
 	}
@@ -31,34 +48,14 @@ public class KnightInputProcessor implements InputProcessor {
 	@Override
 	public boolean keyTyped(char character) {
 		// TODO Auto-generated method stub
-		if (player.attackTimer < 0) {
-			int move = 0;
-			if (character == 'a') {
-				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-					player.anim = "walk";
-					move = player.walkSpeed * -8;
-				} else {
-					player.anim = "run";
-					move = -player.walkSpeed;
-				}
-			} else if (character == 'd') {
-				if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-					player.anim = "walk";
-					move = player.walkSpeed * 8;
-				} else {
-					player.anim = "run";
-					move = player.walkSpeed;
-				}
-			} 
-			player.setVelocity(move);
-		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+		
+		if(character == Input.Keys.UP) {
 			player.takeDamage(-5);
 		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+		else if(character ==Input.Keys.DOWN) {
 			player.takeDamage(5);
 		}
-		player.setIdleTimer(15);
+		player.setIdleTimer(25);
 
 		return false;
 	}

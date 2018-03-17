@@ -34,6 +34,7 @@ public class Player {
 	int idleTimer = 0;
 	int walkSpeed = 1;
 	int velocity = 0;
+	int sprintValue = 1;
 	int x = 0;
 	int y = 0;
 	String anim = "idle";
@@ -46,8 +47,8 @@ public class Player {
 		knightBlockAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_block.atlas"));
 		knightDeathAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_death.atlas"));
 		knightIdleAnim = new Animation<TextureRegion>(1 / 4f, knightIdleAtlas.getRegions());
-		knightWalkAnim = new Animation<TextureRegion>(1 / 8f, knightWalkAtlas.getRegions());
-		knightRunAnim = new Animation<TextureRegion>(1 / 4f, knightWalkAtlas.getRegions());
+		knightWalkAnim = new Animation<TextureRegion>(1 / 4f, knightWalkAtlas.getRegions());
+		knightRunAnim = new Animation<TextureRegion>(1 / 8f, knightWalkAtlas.getRegions());
 		knightSlashAnim = new Animation<TextureRegion>(1 / 10f, knightSlashAtlas.getRegions());
 		knightBlockAnim = new Animation<TextureRegion>(1 / 7f, knightBlockAtlas.getRegions());
 		knightDeathAnim = new Animation<TextureRegion>(1 / 9f, knightDeathAtlas.getRegions());
@@ -60,7 +61,7 @@ public class Player {
 
 		font = new BitmapFont();
 		font.setColor(Color.RED);
-		
+
 		KnightInputProcessor inputProcessor = new KnightInputProcessor(this);
 		Gdx.input.setInputProcessor(inputProcessor);
 	}
@@ -68,17 +69,20 @@ public class Player {
 	public void render(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 
-		x += velocity;
-		camera.translate(velocity, 0);
+		int moveVal = walkSpeed * velocity * sprintValue;
+		System.out.println(moveVal + ": " + walkSpeed + ", " + velocity + ", " + sprintValue);
+		x += moveVal;
+		camera.translate(moveVal, 0);
 		camera.update();
-		
-		if(!anim.equals("death")) {
-			//controlsMKB();
-		}
-		System.out.println(idleTimer);
-		if(idleTimer <= 0) {
-			anim = "idle";
-			velocity = 0;
+
+		if (attackTimer <= 0) {
+			if (moveVal == 1) {
+				setAnim("walk");
+			} else if (moveVal == 8) {
+				setAnim("run");
+			} else {
+				setAnim("idle");
+			}
 		}
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
@@ -118,6 +122,7 @@ public class Player {
 
 	/**
 	 * Demonstrates the various shaperender capabilities
+	 * 
 	 * @param batch
 	 */
 	public void drawShapes(SpriteBatch batch) {
@@ -128,27 +133,41 @@ public class Player {
 		sr.setColor(1, 1, 0, 1);
 		sr.line(x, y, x + 1000, y + 1000);
 		sr.rect(x, y, 100, 100);
-		sr.circle(Gdx.graphics.getWidth()/8, Gdx.graphics.getWidth()/3, 100);
+		sr.circle(Gdx.graphics.getWidth() / 8, Gdx.graphics.getWidth() / 3, 100);
 		sr.end();
 		batch.begin();
 	}
-	
+
 	public void attack() {
 		anim = "attack";
-		attackTimer = 30;
-		idleTimer = 30;
+		attackTimer = 40;
 		elapsedTime = 0;
 		SoundHandler.playSlash();
 	}
-	
+
 	public void setVelocity(int v) {
 		velocity = v;
 	}
-	
+
+	public void setSprintValue(int s) {
+		sprintValue = s;
+	}
+
 	public void setIdleTimer(int i) {
 		idleTimer = i;
 	}
-	
+
+	public void setAnim(String a) {
+		anim = a;
+	}
+
+	public void RunningInput() {
+		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && velocity > 0) {
+			anim = "run";
+			setVelocity(walkSpeed * 8);
+		}
+	}
+
 	public void controlsMKB() {
 		System.out.println(Gdx.input.isButtonPressed(Input.Buttons.LEFT));
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && attackTimer <= 0) {
@@ -157,7 +176,8 @@ public class Player {
 			attackTimer = 30;
 			elapsedTime = 0;
 			SoundHandler.playSlash();
-		}if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+		}
+		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
 			anim = "block";
 			attackTimer = 50;
 			elapsedTime = 0;
@@ -186,16 +206,14 @@ public class Player {
 
 			x += move;
 			camera.translate(move, 0);
-		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+		} else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			takeDamage(-5);
-		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+		} else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			takeDamage(5);
 		}
 		camera.update();
 
-		if (Gdx.input.getX() > Gdx.graphics.getWidth()/2) {
+		if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2) {
 			isFacingRight = true;
 		} else {
 			isFacingRight = false;
@@ -204,12 +222,12 @@ public class Player {
 
 	public void takeDamage(int dmg) {
 		this.health -= dmg;
-		if(health <=0) {
-			this.anim= "death";
+		if (health <= 0) {
+			this.anim = "death";
 			elapsedTime = 0;
 		}
 	}
-	
+
 	public int getX() {
 		return this.x;
 	}
