@@ -72,6 +72,7 @@ public class Player {
 		int moveVal = walkSpeed * velocity * sprintValue;
 		System.out.println(moveVal + ": " + walkSpeed + ", " + velocity + ", " + sprintValue);
 		x += moveVal;
+		determinePlayerFacing();
 		camera.translate(moveVal, 0);
 		camera.update();
 
@@ -140,7 +141,7 @@ public class Player {
 
 	public void attack() {
 		anim = "attack";
-		attackTimer = 40;
+		attackTimer = 30;
 		elapsedTime = 0;
 		SoundHandler.playSlash();
 	}
@@ -168,6 +169,13 @@ public class Player {
 		}
 	}
 
+	public void determinePlayerFacing() {
+		if (Gdx.input.getX() > Gdx.graphics.getWidth() / 2) {
+			isFacingRight = true;
+		} else {
+			isFacingRight = false;
+		}
+	}
 	public void controlsMKB() {
 		System.out.println(Gdx.input.isButtonPressed(Input.Buttons.LEFT));
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && attackTimer <= 0) {
