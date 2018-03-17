@@ -28,6 +28,8 @@ public class Player {
 	Animation<TextureRegion> knightBlockAnim;
 	Animation<TextureRegion> knightDeathAnim;
 	float elapsedTime = 0;
+	float age = 0;
+	float lifespan = 100;
 	float health = 100;
 	boolean isFacingRight = true;
 	int attackTimer = 0;
@@ -68,9 +70,10 @@ public class Player {
 
 	public void render(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
-
+		calculateAge();
+		calculateHealth();
 		int moveVal = walkSpeed * velocity * sprintValue;
-		System.out.println(moveVal + ": " + walkSpeed + ", " + velocity + ", " + sprintValue);
+		//System.out.println(moveVal + ": " + walkSpeed + ", " + velocity + ", " + sprintValue);
 		x += moveVal;
 		determinePlayerFacing();
 		camera.translate(moveVal, 0);
@@ -87,17 +90,23 @@ public class Player {
 		}
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
-		font.draw(batch, "HEALTH: " + health, x + 25, 500);
+		font.draw(batch, "HEALTH: " + this.health, x, 500);
 		attackTimer--;
 		idleTimer--;
 
 		// drawShapes(batch);
-		// System.out.println("Player: (" + x + "," + y +"), MouseX: " +
-		// Gdx.input.getX() );
+	}
+
+	private void calculateAge() {
+		// TODO Auto-generated method stub
+		age += Gdx.graphics.getDeltaTime();
+	}
+	
+	private void calculateHealth() {
+		this.health = lifespan - (age/lifespan);
 	}
 
 	public TextureRegion getAnimation() {
-		// System.out.println(anim);
 		TextureRegion ret;
 		if (anim.equals("attack")) {
 			ret = knightSlashAnim.getKeyFrame(elapsedTime, false);
@@ -128,7 +137,6 @@ public class Player {
 	 */
 	public void drawShapes(SpriteBatch batch) {
 		batch.end();
-		// camera.update();
 
 		sr.begin(ShapeType.Line);
 		sr.setColor(1, 1, 0, 1);
@@ -229,7 +237,8 @@ public class Player {
 	}
 
 	public void takeDamage(int dmg) {
-		this.health -= dmg;
+		this.age += dmg;
+		calculateHealth();
 		if (health <= 0) {
 			this.anim = "death";
 			elapsedTime = 0;
@@ -242,5 +251,9 @@ public class Player {
 
 	public int getY() {
 		return this.y;
+	}
+	
+	public float getHealth() {
+		return this.health;
 	}
 }

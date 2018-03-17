@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class World {
 	Player player = new Player();
+	Texture bgSun;
 	Texture bgMountain;
 	Texture bgHills;
 	Texture bgTrees;
@@ -31,39 +32,38 @@ public class World {
 	public void create() {
 		player.create();
 		
-		bgMountain = new Texture("tileset/parallax-mountain-bg.png");
+		bgSun = new Texture("tileset/parallax-sun.png");
+		bgMountain = new Texture("tileset/parallax-sky.png");
 		bgHills = new Texture("tileset/parallax-mountain-mountains.png");
 		bgTrees = new Texture("tileset/parallax-mountain-trees.png");
-		
 		grass = new Texture("tileset/grass.png");
 		
 		grassTilesAtlas = new TextureAtlas(Gdx.files.internal("tileset/groundTiles.atlas"));
 		grassTiles = new Animation<TextureRegion>(1f, grassTilesAtlas.getRegions());
-		//img = new Texture("badlogic.jpg");
+		
 		Random gen = new Random();
 		for(int i = -2000; i < 2000; i++) {
 			float fl = (float)gen.nextInt(2)+3;
 			Tile t = new Tile(grassTiles.getKeyFrame(fl, true), i*64, -52);
 			ground.add(t);
 		}
-
-		//sprite = new Sprite(img);
 		
 	}
 	
 	public void render(SpriteBatch batch) {
+		float x = player.getHealth()/100;
+		batch.setColor(x, x, x, 1);
 		batch.draw(bgMountain, player.getX()-560, player.getY()-60, 1280, 720);
+		float sunHeight = calculateSunHeight();
+		batch.draw(bgSun, player.getX()-64, sunHeight, 256, 256);
 		moveBackGround(player.getX());
 		batch.draw(bgHills, hillsX, player.getY()-60, bgWidth, 900);
 		batch.draw(bgHills, hillsX-1600, player.getY()-60, bgWidth, 900);
 		
 		batch.draw(bgTrees, treesX, player.getY()-30, bgWidth, 900);
 		batch.draw(bgTrees, treesX-1600, player.getY()-30, bgWidth, 900);
-
-		//batch.draw(img2, 50, 50);
-		//sprite.draw(batch);
-		//sprite.setPosition(spriteX, sprite.getY());
-		//spriteX++;
+		float z = (1f - x)/2;
+		batch.setColor(1-z, 1-z, 1-z, 1);
 		player.render(batch);
 		renderGround(batch);
 	}
@@ -74,6 +74,11 @@ public class World {
 				batch.draw(t.getTex(), t.getX(), t.getY(), 64, 64);
 			}
 		}
+	}
+	
+	private float calculateSunHeight() {
+		float y = 300 - (400 * (1 - player.getHealth()/100f));
+		return y;
 	}
 	
 	private int dist(int a, int b) {

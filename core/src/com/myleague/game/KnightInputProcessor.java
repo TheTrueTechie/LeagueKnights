@@ -30,6 +30,12 @@ public class KnightInputProcessor implements InputProcessor {
 		if(keycode == 59) {
 			player.setSprintValue(8);
 		}
+		if(keycode == Input.Keys.UP) {
+			player.takeDamage(-500);
+		}
+		else if(keycode ==Input.Keys.DOWN) {
+			player.takeDamage(500);
+		}
 		return false;
 	}
 
@@ -49,12 +55,7 @@ public class KnightInputProcessor implements InputProcessor {
 	public boolean keyTyped(char character) {
 		// TODO Auto-generated method stub
 		
-		if(character == Input.Keys.UP) {
-			player.takeDamage(-5);
-		}
-		else if(character ==Input.Keys.DOWN) {
-			player.takeDamage(5);
-		}
+		
 		player.setIdleTimer(25);
 
 		return false;
