@@ -32,6 +32,7 @@ public class Player {
 	float lifespan = 100;
 	float health = 100;
 	boolean isFacingRight = true;
+	boolean isDying = false;
 	int attackTimer = 0;
 	int idleTimer = 0;
 	int walkSpeed = 1;
@@ -70,16 +71,15 @@ public class Player {
 
 	public void render(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
+
 		calculateAge();
 		calculateHealth();
-		int moveVal = walkSpeed * velocity * sprintValue;
-		//System.out.println(moveVal + ": " + walkSpeed + ", " + velocity + ", " + sprintValue);
-		x += moveVal;
-		determinePlayerFacing();
-		camera.translate(moveVal, 0);
-		camera.update();
-
-		if (attackTimer <= 0) {
+		if (attackTimer <= 0 && !anim.equals("death")) {
+			determinePlayerFacing();
+			int moveVal = walkSpeed * velocity * sprintValue;
+			camera.translate(moveVal, 0);
+			camera.update();
+			x += moveVal;
 			if (moveVal == 1) {
 				setAnim("walk");
 			} else if (moveVal == 8) {
@@ -90,7 +90,7 @@ public class Player {
 		}
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
-		font.draw(batch, "HEALTH: " + (int)this.health, x+25, 500);
+		font.draw(batch, "HEALTH: " + (int) this.health, x + 25, 500);
 		attackTimer--;
 		idleTimer--;
 
@@ -99,11 +99,16 @@ public class Player {
 
 	private void calculateAge() {
 		// TODO Auto-generated method stub
-		age += Gdx.graphics.getDeltaTime()*10;
+		age += Gdx.graphics.getDeltaTime() * 10;
 	}
-	
+
 	private void calculateHealth() {
-		this.health = lifespan - (age/lifespan);
+		this.health = lifespan - (age / lifespan);
+		if ((int) health <= 0 && isDying == false) {
+			setAnim("death");
+			elapsedTime = 0;
+			isDying = true;
+		}
 	}
 
 	public TextureRegion getAnimation() {
@@ -148,10 +153,12 @@ public class Player {
 	}
 
 	public void attack() {
-		anim = "attack";
-		attackTimer = 30;
-		elapsedTime = 0;
-		SoundHandler.playSlash();
+		if (!isDying) {
+			anim = "attack";
+			attackTimer = 30;
+			elapsedTime = 0;
+			SoundHandler.playSlash();
+		}
 	}
 
 	public void setVelocity(int v) {
@@ -170,6 +177,10 @@ public class Player {
 		anim = a;
 	}
 
+	public void setAge(float a) {
+		this.age = a * 100;
+	}
+
 	public void RunningInput() {
 		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && velocity > 0) {
 			anim = "run";
@@ -184,6 +195,7 @@ public class Player {
 			isFacingRight = false;
 		}
 	}
+
 	public void controlsMKB() {
 		System.out.println(Gdx.input.isButtonPressed(Input.Buttons.LEFT));
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && attackTimer <= 0) {
@@ -239,10 +251,6 @@ public class Player {
 	public void takeDamage(int dmg) {
 		this.age += dmg;
 		calculateHealth();
-		if (health <= 0) {
-			this.anim = "death";
-			elapsedTime = 0;
-		}
 	}
 
 	public int getX() {
@@ -252,7 +260,7 @@ public class Player {
 	public int getY() {
 		return this.y;
 	}
-	
+
 	public float getHealth() {
 		return this.health;
 	}

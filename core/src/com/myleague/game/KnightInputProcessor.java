@@ -36,12 +36,17 @@ public class KnightInputProcessor implements InputProcessor {
 		else if(keycode ==Input.Keys.DOWN) {
 			player.takeDamage(500);
 		}
+
+		else if(keycode ==Input.Keys.NUM_1) {
+			player.setAge(98f);
+		}
 		if(keycode == Input.Keys.LEFT) {
 			player.toggleMoveLeft();
 		}
 		else if(keycode ==Input.Keys.RIGHT) {
 			player.toggleMoveRight();
 		}
+		
 		return false;
 	}
 
