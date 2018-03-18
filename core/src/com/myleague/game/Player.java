@@ -90,7 +90,7 @@ public class Player {
 		}
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
-		font.draw(batch, "HEALTH: " + (int) this.health, x + 25, 500);
+		//font.draw(batch, "HEALTH: " + (int) this.health, x + 25, 500);
 		attackTimer--;
 		idleTimer--;
 

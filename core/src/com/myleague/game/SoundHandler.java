@@ -21,13 +21,12 @@ public class SoundHandler {
 	public static void playSlash() {
 		slash.stop();
 		long id = slash.play();
-		//slash.setPitch(id,getRandomPitch());
+		slash.setPitch(id,getRandomPitch());
 		//slash.dispose();
 	}
 	
 	public static float getRandomPitch() {
-		float pitch = new Random().nextFloat();
-		
+		float pitch = new Random().nextFloat()*1.5f+0.5f;
 		return pitch;
 	}
 	

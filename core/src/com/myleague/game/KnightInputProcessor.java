@@ -53,7 +53,6 @@ public class KnightInputProcessor implements InputProcessor {
 	@Override
 	public boolean keyUp(int keycode) {
 		// TODO Auto-generated method stub
-		System.out.println("Key up! " + keycode);
 		if (keycode == Input.Keys.A || keycode == Input.Keys.D) {
 			player.setVelocity(0);
 		} if(keycode == 59) {
@@ -65,10 +64,6 @@ public class KnightInputProcessor implements InputProcessor {
 	@Override
 	public boolean keyTyped(char character) {
 		// TODO Auto-generated method stub
-		
-		
-		player.setIdleTimer(25);
-
 		return false;
 	}
 
