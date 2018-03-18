@@ -90,7 +90,7 @@ public class Player {
 		}
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
-		font.draw(batch, "HEALTH: " + this.health, x, 500);
+		font.draw(batch, "HEALTH: " + (int)this.health, x+25, 500);
 		attackTimer--;
 		idleTimer--;
 
@@ -99,7 +99,7 @@ public class Player {
 
 	private void calculateAge() {
 		// TODO Auto-generated method stub
-		age += Gdx.graphics.getDeltaTime();
+		age += Gdx.graphics.getDeltaTime()*10;
 	}
 	
 	private void calculateHealth() {
@@ -255,5 +255,15 @@ public class Player {
 	
 	public float getHealth() {
 		return this.health;
+	}
+
+	public void toggleMoveLeft() {
+		// TODO Auto-generated method stub
+		velocity = -1;
+	}
+
+	public void toggleMoveRight() {
+		// TODO Auto-generated method stub
+		velocity = 1;
 	}
 }

@@ -52,7 +52,8 @@ public class World {
 	
 	public void render(SpriteBatch batch) {
 		float x = player.getHealth()/100;
-		batch.setColor(x, x, x, 1);
+		float z = (1f - x)/2;
+		batch.setColor(Math.min(x*1.3f, 1f), x, x, 1);
 		batch.draw(bgMountain, player.getX()-560, player.getY()-60, 1280, 720);
 		float sunHeight = calculateSunHeight();
 		batch.draw(bgSun, player.getX()-64, sunHeight, 256, 256);
@@ -62,7 +63,6 @@ public class World {
 		
 		batch.draw(bgTrees, treesX, player.getY()-30, bgWidth, 900);
 		batch.draw(bgTrees, treesX-1600, player.getY()-30, bgWidth, 900);
-		float z = (1f - x)/2;
 		batch.setColor(1-z, 1-z, 1-z, 1);
 		player.render(batch);
 		renderGround(batch);
