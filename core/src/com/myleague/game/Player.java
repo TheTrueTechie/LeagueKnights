@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -42,6 +43,11 @@ public class Player {
 	int y = 0;
 	String anim = "idle";
 	ShapeRenderer sr;
+	
+	// Temp test variables
+	Dialog testDialog;
+	Texture dialogProfile;
+	private boolean showingDialog = false;
 
 	public void create() {
 		knightIdleAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_idle.atlas"));
@@ -67,6 +73,10 @@ public class Player {
 
 		KnightInputProcessor inputProcessor = new KnightInputProcessor(this);
 		Gdx.input.setInputProcessor(inputProcessor);
+		
+		// Temp Test variables
+		dialogProfile = new Texture("spritesheets/profile.jpg");
+		testDialog = new Dialog("DEATH", "Hi there! I am death. I'm coming for you...", dialogProfile, camera);
 	}
 
 	public void render(SpriteBatch batch) {
@@ -94,6 +104,9 @@ public class Player {
 		attackTimer--;
 		idleTimer--;
 
+		if(age > 100 && age < 2000 || showingDialog) {
+			testDialog.render(batch);
+		}
 		// drawShapes(batch);
 	}
 
@@ -273,5 +286,15 @@ public class Player {
 	public void toggleMoveRight() {
 		// TODO Auto-generated method stub
 		velocity = 1;
+	}
+
+	public void showDialog() {
+		// TODO Auto-generated method stub
+		if(showingDialog) {
+			showingDialog = false;
+		}
+		else {
+			showingDialog  = true;
+		}
 	}
 }

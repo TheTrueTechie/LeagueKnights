@@ -40,6 +40,9 @@ public class KnightInputProcessor implements InputProcessor {
 		else if(keycode ==Input.Keys.NUM_1) {
 			player.setAge(98f);
 		}
+		else if(keycode ==Input.Keys.NUM_2) {
+			player.showDialog();
+		}
 		if(keycode == Input.Keys.LEFT) {
 			player.toggleMoveLeft();
 		}
