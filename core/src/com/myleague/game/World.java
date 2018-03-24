@@ -30,7 +30,7 @@ public class World {
 	int treesX = 0;
 	
 	public void create() {
-		player.create();
+		player.create(this);
 		
 		bgSun = new Texture("tileset/parallax-sun.png");
 		bgMountain = new Texture("tileset/parallax-sky.png");

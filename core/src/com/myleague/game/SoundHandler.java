@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Sound;
 public class SoundHandler {
 	private Music musicbox = Gdx.audio.newMusic(Gdx.files.internal("sounds/musicbox.mp3"));
 	private static Music piano = Gdx.audio.newMusic(Gdx.files.internal("sounds/piano.mp3"));
+	private static Music bossMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/BossBattle.wav"));
 	
 	private static Sound slash = Gdx.audio.newSound(Gdx.files.internal("sounds/slash.wav"));
 	private static long slashID = 0;
@@ -16,6 +17,12 @@ public class SoundHandler {
 	public static void init() {
 		piano.setLooping(true);
 		piano.play();
+	}
+	
+	public static void playBossMusic() {
+		piano.stop();
+		bossMusic.setLooping(true);
+		bossMusic.play();
 	}
 	
 	public static void playSlash() {

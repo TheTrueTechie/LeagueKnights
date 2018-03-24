@@ -43,6 +43,10 @@ public class KnightInputProcessor implements InputProcessor {
 		else if(keycode ==Input.Keys.NUM_2) {
 			player.showDialog();
 		}
+
+		else if(keycode ==Input.Keys.NUM_0) {
+			player.playBossMusic();
+		}
 		if(keycode == Input.Keys.LEFT) {
 			player.toggleMoveLeft();
 		}

@@ -94,7 +94,6 @@ public class Menu {
 	
 	public void getButtonInput() {
 		if(genericButton.isPressed()) {
-			System.out.println("PRESSED!");
 			game.startGame();
 		}
 	}

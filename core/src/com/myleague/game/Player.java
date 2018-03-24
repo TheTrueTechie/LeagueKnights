@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Player {
 	public OrthographicCamera camera;
+	World world;
 	BitmapFont font;
 	TextureAtlas knightIdleAtlas;
 	TextureAtlas knightWalkAtlas;
@@ -49,7 +50,7 @@ public class Player {
 	Texture dialogProfile;
 	private boolean showingDialog = false;
 
-	public void create() {
+	public void create(World world) {
 		knightIdleAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_idle.atlas"));
 		knightWalkAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_walk.atlas"));
 		knightSlashAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/knight_slash.atlas"));
@@ -64,7 +65,9 @@ public class Player {
 		camera = new OrthographicCamera(1280, 720);
 		camera.translate(80, 300);
 		camera.update();
-
+		
+		this.world = world;
+		
 		sr = new ShapeRenderer();
 		sr.setProjectionMatrix(camera.combined);
 
@@ -90,7 +93,7 @@ public class Player {
 			camera.translate(moveVal, 0);
 			camera.update();
 			x += moveVal;
-			if (moveVal == 1) {
+			if (Math.abs(moveVal) == 1) {
 				setAnim("walk");
 			} else if (moveVal == 8) {
 				setAnim("run");
@@ -296,5 +299,9 @@ public class Player {
 		else {
 			showingDialog  = true;
 		}
+	}
+	
+	public void playBossMusic() {
+		SoundHandler.playBossMusic();
 	}
 }
