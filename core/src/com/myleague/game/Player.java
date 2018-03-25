@@ -101,6 +101,10 @@ public class Player {
 				setAnim("idle");
 			}
 		}
+		
+		if (attackTimer == 10) {
+			checkForEnemyHit();
+		}
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
 		//font.draw(batch, "HEALTH: " + (int) this.health, x + 25, 500);
@@ -174,7 +178,6 @@ public class Player {
 			attackTimer = 30;
 			elapsedTime = 0;
 			SoundHandler.playSlash();
-			checkForEnemyHit();
 		}
 	}
 	

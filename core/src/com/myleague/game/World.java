@@ -50,7 +50,7 @@ public class World {
 		}
 		
 		Enemy enemy = new Enemy();
-		enemy.create(this);
+		enemy.create(this, this.player);
 		enemy.setX(500);
 		enemies.add(enemy);
 		

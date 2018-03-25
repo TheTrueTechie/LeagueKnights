@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Enemy {
 	World world;
+	Player player;
 	int x = 0;
 	int y = 5;
 	float health = 10;
@@ -25,9 +26,10 @@ public class Enemy {
 	boolean isFacingRight = false;
 	String anim = "idle";
 	private boolean isDying = false;
+	private int attackTimer = 0;
 	
 	
-	public void create(World world) {
+	public void create(World world, Player player) {
 		idleAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/EnemyRogue_Idle.atlas"));
 		walkAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/EnemyRogue_Walk.atlas"));
 		slashAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/EnemyRogue_Slash.atlas"));
@@ -35,10 +37,11 @@ public class Enemy {
 		idleAnim = new Animation<TextureRegion>(1 / 5f, idleAtlas.getRegions());
 		walkAnim = new Animation<TextureRegion>(1 / 5f, walkAtlas.getRegions());
 		runAnim = new Animation<TextureRegion>(1 / 5f, walkAtlas.getRegions());
-		slashAnim = new Animation<TextureRegion>(1 / 5f, slashAtlas.getRegions());
+		slashAnim = new Animation<TextureRegion>(1 / 9f, slashAtlas.getRegions());
 		deathAnim = new Animation<TextureRegion>(1 / 5f, deathAtlas.getRegions());
 
 		this.world = world;
+		this.player = player;
 	}
 	
 	public void takeDamage(int dmg) {
@@ -51,18 +54,35 @@ public class Enemy {
 	}
 	
 	private void setAnim(String string) {
-		// TODO Auto-generated method stub
 		this.anim = string;
 	}
 
 	public void render(SpriteBatch batch) {
 		elapsedTime += Gdx.graphics.getDeltaTime();
-		act();
+		if(!isDying) {
+			act();
+		}
 		batch.draw(getAnimation(), x, y, 100, 100);
 	}
 	
 	public void act() {
+		if(player.getX() < x-40 && attackTimer < 0) {
+			setAnim("walk");
+			x--;
+		}
+		else if(player.getX() == x-40 && attackTimer  < 0) {
+			setAnim("attack");
+			attackTimer = 40;
+			elapsedTime = 0;
+		}
+		else if(attackTimer<0){
+			setAnim("idle");
+		}
 		
+		if(attackTimer == 20 && player.getX() == x-40) {
+			player.takeDamage(200);
+		}
+		attackTimer--;
 	}
 	
 	public TextureRegion getAnimation() {
