@@ -174,7 +174,27 @@ public class Player {
 			attackTimer = 30;
 			elapsedTime = 0;
 			SoundHandler.playSlash();
+			checkForEnemyHit();
 		}
+	}
+	
+	private void checkForEnemyHit() {
+		for (Enemy e : world.getEnemies()) {
+			if((isFacingRight && isInRange(e.getX(), this.x, 90)) || (!isFacingRight && isInRange(e.getX(), this.x, -90))) {
+				System.out.println(isFacingRight + ", " + e.getX() + ", " + this.x);
+				e.takeDamage(10);
+			}
+		}
+	}
+	
+	private boolean isInRange(int x1, int x2, int range) {
+		if(x1-x2 < range && x1-x2 > 0) {
+			return true;
+		}
+		else if(x1-x2 > range && x1-x2 < 0) {
+			return true;
+		}
+		else return false;
 	}
 
 	public void setVelocity(int v) {
@@ -197,7 +217,7 @@ public class Player {
 		this.age = a * 100;
 	}
 
-	public void RunningInput() {
+	public void runningInput() {
 		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && velocity > 0) {
 			anim = "run";
 			setVelocity(walkSpeed * 8);

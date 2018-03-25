@@ -24,6 +24,7 @@ public class World {
 	Animation<TextureRegion> grassTiles;
 	
 	ArrayList<Tile> ground = new ArrayList<Tile>();
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	
 	int bgWidth = 1600;
 	int hillsX = 0;
@@ -48,6 +49,11 @@ public class World {
 			ground.add(t);
 		}
 		
+		Enemy enemy = new Enemy();
+		enemy.create(this);
+		enemy.setX(500);
+		enemies.add(enemy);
+		
 	}
 	
 	public void render(SpriteBatch batch) {
@@ -66,8 +72,9 @@ public class World {
 		batch.draw(bgTrees, treesX-1600, player.getY()-30, bgWidth, 900);
 		float rgb = Math.max(1-z, 0f);
 		batch.setColor(rgb, rgb, rgb, 1);
-		player.render(batch);
 		renderGround(batch);
+		renderEnemies(batch);
+		player.render(batch);
 	}
 	
 	public void renderGround(SpriteBatch batch) {
@@ -75,6 +82,12 @@ public class World {
 			if(dist(t.getX(), player.getX()) < Gdx.graphics.getWidth()*0.6) {
 				batch.draw(t.getTex(), t.getX(), t.getY(), 64, 64);
 			}
+		}
+	}
+	
+	public void renderEnemies(SpriteBatch batch) {
+		for (Enemy e : enemies){
+			e.render(batch);
 		}
 	}
 	
@@ -90,5 +103,9 @@ public class World {
 	public void moveBackGround(int px) {
 		hillsX = px-(int)( (px% ((bgWidth/2)/0.2) )*0.2);
 		treesX = px-(int)( (px% ((bgWidth/2)/0.4) )*0.4);
+	}
+	
+	public ArrayList<Enemy> getEnemies() {
+		return this.enemies;
 	}
 }
