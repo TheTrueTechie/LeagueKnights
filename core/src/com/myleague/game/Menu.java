@@ -49,18 +49,19 @@ public class Menu {
 		  pixmap.setColor(Color.WHITE);
 		  pixmap.fill();
 		  skin.add("background",new Texture(pixmap));
+		  skin.add("startbutton", new Texture("ui/start.png"));
 		  skin.add("default", font);
 		  
 		  //Create a button style
 		  TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-		  textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
-		  textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
+		  textButtonStyle.up = skin.newDrawable("startbutton", Color.GRAY);
+		  textButtonStyle.down = skin.newDrawable("startbutton", Color.DARK_GRAY);
 		  //textButtonStyle.checked = skin.newDrawable("background", Color.DARK_GRAY);
-		  textButtonStyle.over = skin.newDrawable("background", Color.LIGHT_GRAY);
+		  textButtonStyle.over = skin.newDrawable("startbutton", Color.LIGHT_GRAY);
 		  textButtonStyle.font = skin.getFont("default");
 		  skin.add("default", textButtonStyle);
 		  
-		  genericButton = new TextButton("New game", skin); // Use the initialized skin
+		  genericButton = new TextButton("", skin); // Use the initialized skin
 		  genericButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2);
 	      stage.addActor(genericButton);
 	}
