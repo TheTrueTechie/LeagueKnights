@@ -36,6 +36,7 @@ public class Player {
 	boolean isFacingRight = true;
 	boolean isDying = false;
 	int attackTimer = 0;
+	int attackLength = 60;
 	int idleTimer = 0;
 	int walkSpeed = 1;
 	int velocity = 0;
@@ -102,13 +103,13 @@ public class Player {
 			}
 		}
 		
-		if (attackTimer == 10) {
+		if (attackTimer == attackLength) {
 			checkForEnemyHit();
 		}
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(getAnimation(), x, y, 128, 128);
 		//font.draw(batch, "HEALTH: " + (int) this.health, x + 25, 500);
-		attackTimer--;
+		attackTimer -= elapsedTime;
 		idleTimer--;
 
 		if(age > 100 && age < 2000 || showingDialog) {
@@ -175,7 +176,7 @@ public class Player {
 	public void attack() {
 		if (!isDying) {
 			anim = "attack";
-			attackTimer = 30;
+			attackTimer = attackLength;
 			elapsedTime = 0;
 			SoundHandler.playSlash();
 		}
@@ -240,13 +241,13 @@ public class Player {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && attackTimer <= 0) {
 			System.out.println("LMB");
 			anim = "attack";
-			attackTimer = 30;
+			attackTimer = attackLength;
 			elapsedTime = 0;
 			SoundHandler.playSlash();
 		}
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
 			anim = "block";
-			attackTimer = 50;
+			attackTimer = (int) (attackLength*1.5);
 			elapsedTime = 0;
 		}
 		if (attackTimer < 0) {
