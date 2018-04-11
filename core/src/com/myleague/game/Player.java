@@ -70,7 +70,7 @@ public class Player {
 		this.world = world;
 		
 		sr = new ShapeRenderer();
-		sr.setProjectionMatrix(camera.combined);
+		sr.setProjectionMatrix(camera.projection);
 
 		font = new BitmapFont();
 		font.setColor(Color.RED);
@@ -112,10 +112,29 @@ public class Player {
 		attackTimer -= elapsedTime;
 		idleTimer--;
 
+		drawHealthBar(batch);
 		if(age > 100 && age < 2000 || showingDialog) {
 			testDialog.render(batch);
 		}
 		// drawShapes(batch);
+	}
+	
+	private void drawHealthBar(SpriteBatch batch) {
+		int hw = Gdx.graphics.getWidth()/2;
+		int hh = Gdx.graphics.getHeight()/2;
+		float hp = this.health/100;
+		batch.end();
+		
+		sr.begin(ShapeType.Filled);
+		sr.setColor(1f-hp, 1f-hp, 1f-hp, 1f);
+		sr.rect(10-hw, hh-35, 300, 30);	
+		sr.end();
+		sr.begin(ShapeType.Filled);
+		sr.setColor(1f-hp, 1f*hp, 0f, 1f);
+		sr.rect(15-hw, hh-30, Math.max(290*hp, 0), 20);	
+		sr.end();
+		
+		batch.begin();
 	}
 
 	private void calculateAge() {
