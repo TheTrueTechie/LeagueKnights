@@ -103,7 +103,7 @@ public class Player {
 			}
 		}
 		
-		if (attackTimer == attackLength) {
+		if (attackTimer > attackLength * 0.33 && attackTimer < attackLength * 0.66) {
 			checkForEnemyHit();
 		}
 		batch.setProjectionMatrix(camera.combined);
