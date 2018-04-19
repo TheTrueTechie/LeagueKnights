@@ -135,6 +135,9 @@ public class Player {
 		sr.end();
 		
 		batch.begin();
+
+		font.setColor(1f-hp, 1f*hp, 0f, 1f);
+		font.draw(batch, "HEALTH: " + (int) this.health, x-hw+90, y+hh*2-100);
 	}
 
 	private void calculateAge() {
