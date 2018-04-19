@@ -1,17 +1,23 @@
 package com.myleague.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector3;
 
 public class Enemy {
 	World world;
 	Player player;
 	int x = 0;
 	int y = 5;
-	float health = 10;
+	float health = 20;
+	float maxHealth = 20;
 	TextureAtlas idleAtlas;
 	TextureAtlas walkAtlas;
 	TextureAtlas slashAtlas;
@@ -27,6 +33,8 @@ public class Enemy {
 	String anim = "idle";
 	private boolean isDying = false;
 	private int attackTimer = 0;
+	ShapeRenderer sr;
+	BitmapFont font;
 	
 	
 	public void create(World world, Player player) {
@@ -42,6 +50,33 @@ public class Enemy {
 
 		this.world = world;
 		this.player = player;
+		
+		font = new BitmapFont();
+		font.setColor(Color.RED);
+		
+		sr = new ShapeRenderer();
+		sr.setProjectionMatrix(player.getCamera().projection);
+	}
+	
+	private void drawHealthBar(SpriteBatch batch) {
+		int hw = Gdx.graphics.getWidth()/2;
+		int hh = Gdx.graphics.getHeight()/2;
+		float hp = this.health/maxHealth;
+		batch.end();
+		Vector3 vec = player.getCamera().project(new Vector3(x, y, 1));
+		sr.begin(ShapeType.Filled);
+		sr.setColor(1f-hp, 1f-hp, 1f-hp, 1f);
+		sr.rect(vec.x-hw, vec.y-hh+100, 110, 20);	
+		sr.end();
+		sr.begin(ShapeType.Filled);
+		sr.setColor(1f-hp, 1f*hp, 0f, 1f);
+		sr.rect(vec.x-hw+3, vec.y-hh+102, Math.max(104*hp, 0), 16);	
+		sr.end();
+		
+		batch.begin();
+
+		font.setColor(1f-hp, 1f*hp, 0f, 1f);
+		font.draw(batch, "HEALTH: " + (int) this.health, x, y);
 	}
 	
 	public void takeDamage(int dmg) {
@@ -61,8 +96,10 @@ public class Enemy {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		if(!isDying) {
 			act();
+			drawHealthBar(batch);
 		}
 		batch.draw(getAnimation(), x, y, 100, 100);
+		
 	}
 	
 	public void act() {

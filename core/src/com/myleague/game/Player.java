@@ -208,7 +208,7 @@ public class Player {
 		for (Enemy e : world.getEnemies()) {
 			if((isFacingRight && isInRange(e.getX(), this.x, 90)) || (!isFacingRight && isInRange(e.getX(), this.x, -90))) {
 				System.out.println(isFacingRight + ", " + e.getX() + ", " + this.x);
-				e.takeDamage(10);
+				e.takeDamage(1);
 			}
 		}
 	}
@@ -327,6 +327,10 @@ public class Player {
 		return this.health;
 	}
 
+	public OrthographicCamera getCamera() {
+		return this.camera;
+	}
+	
 	public void toggleMoveLeft() {
 		// TODO Auto-generated method stub
 		velocity = -1;
