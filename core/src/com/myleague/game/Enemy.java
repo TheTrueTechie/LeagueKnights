@@ -76,7 +76,7 @@ public class Enemy {
 		batch.begin();
 
 		font.setColor(1f-hp, 1f*hp, 0f, 1f);
-		font.draw(batch, "HEALTH: " + (int) this.health, x, y);
+		font.draw(batch, "HEALTH: " + (int) this.health, x+2, y+130);
 	}
 	
 	public void takeDamage(int dmg) {
