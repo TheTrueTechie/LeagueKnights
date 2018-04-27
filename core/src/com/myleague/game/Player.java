@@ -36,7 +36,7 @@ public class Player {
 	boolean isFacingRight = true;
 	boolean isDying = false;
 	int attackTimer = 0;
-	int attackLength = 60;
+	int attackLength = 25;
 	int idleTimer = 0;
 	int walkSpeed = 1;
 	int velocity = 0;
@@ -325,6 +325,10 @@ public class Player {
 
 	public float getHealth() {
 		return this.health;
+	}
+	
+	public float getElapsedTime() {
+		return this.elapsedTime;
 	}
 
 	public OrthographicCamera getCamera() {

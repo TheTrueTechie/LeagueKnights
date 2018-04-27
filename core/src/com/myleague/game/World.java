@@ -25,7 +25,7 @@ public class World {
 	
 	ArrayList<Tile> ground = new ArrayList<Tile>();
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	
+	Random gen = new Random();
 	int bgWidth = 1600;
 	int hillsX = 0;
 	int treesX = 0;
@@ -72,9 +72,22 @@ public class World {
 		batch.draw(bgTrees, treesX-1600, player.getY()-30, bgWidth, 900);
 		float rgb = Math.max(1-z, 0f);
 		batch.setColor(rgb, rgb, rgb, 1);
+		
+		if(gen.nextInt(200) == 0) {
+			spawnEnemy();
+		}
+		
 		renderGround(batch);
 		renderEnemies(batch);
 		player.render(batch);
+	}
+	
+	public void spawnEnemy() {
+		System.out.println("Spawning enemy at " + this.player.x );
+		Enemy enemy = new Enemy();
+		enemy.create(this, this.player);
+		enemy.setX(this.player.x + 800);
+		enemies.add(enemy);
 	}
 	
 	public void renderGround(SpriteBatch batch) {
