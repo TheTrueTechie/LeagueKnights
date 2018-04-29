@@ -103,20 +103,36 @@ public class Enemy {
 	}
 	
 	public void act() {
+		if (player.getX() > x) {
+			isFacingRight = true;
+		}
+		else {
+			isFacingRight = false;
+		}
+		
 		if(player.getX() < x-40 && attackTimer < 0) {
 			setAnim("walk");
 			x--;
 		}
-		else if(player.getX() == x-40 && attackTimer  < 0) {
+		else if(player.getX() >= x-40 && !isFacingRight && attackTimer  < 0) {
 			setAnim("attack");
 			attackTimer = 40;
 			elapsedTime = 0;
+		}
+		else if(player.getX() <= x+40 && isFacingRight && attackTimer  < 0) {
+			setAnim("attack");
+			attackTimer = 40;
+			elapsedTime = 0;
+		}
+		else if(player.getX() > x+40 && attackTimer < 0) {
+			setAnim("walk");
+			x+=3;
 		}
 		else if(attackTimer<0){
 			setAnim("idle");
 		}
 		
-		if(attackTimer == 20 && player.getX() == x-40) {
+		if(attackTimer == 20 && ((player.getX() >= x-40 && !isFacingRight) || (player.getX() <= x+40 && isFacingRight))) {
 			player.takeDamage(200);
 		}
 		attackTimer--;
