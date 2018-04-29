@@ -113,7 +113,7 @@ public class Player {
 		idleTimer--;
 
 		drawHealthBar(batch);
-		if(age > 100 && age < 2000 || showingDialog) {
+		if(age > 100 && age < 250 || showingDialog) {
 			testDialog.render(batch);
 		}
 		// drawShapes(batch);
