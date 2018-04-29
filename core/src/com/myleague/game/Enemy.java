@@ -44,7 +44,7 @@ public class Enemy {
 		deathAtlas = new TextureAtlas(Gdx.files.internal("spritesheets/EnemyRogue_Death.atlas"));
 		idleAnim = new Animation<TextureRegion>(1 / 5f, idleAtlas.getRegions());
 		walkAnim = new Animation<TextureRegion>(1 / 5f, walkAtlas.getRegions());
-		runAnim = new Animation<TextureRegion>(1 / 5f, walkAtlas.getRegions());
+		runAnim = new Animation<TextureRegion>(1 / 10f, walkAtlas.getRegions());
 		slashAnim = new Animation<TextureRegion>(1 / 9f, slashAtlas.getRegions());
 		deathAnim = new Animation<TextureRegion>(1 / 5f, deathAtlas.getRegions());
 
@@ -125,14 +125,14 @@ public class Enemy {
 			elapsedTime = 0;
 		}
 		else if(player.getX() > x+40 && attackTimer < 0) {
-			setAnim("walk");
+			setAnim("run");
 			x+=3;
 		}
 		else if(attackTimer<0){
 			setAnim("idle");
 		}
 		
-		if(attackTimer == 20 && ((player.getX() >= x-40 && !isFacingRight) || (player.getX() <= x+40 && isFacingRight))) {
+		if(attackTimer == 20 && ((player.getX() >= x-60 && !isFacingRight) || (player.getX() <= x+60 && isFacingRight))) {
 			player.takeDamage(200);
 		}
 		attackTimer--;
