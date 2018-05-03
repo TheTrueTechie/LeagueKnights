@@ -115,6 +115,7 @@ public class Player {
 
 		drawHealthBar(batch);
 		drawStaminaBar(batch);
+		drawDistanceWalked(batch);
 		if(age > 100 && age < 250 || showingDialog) {
 			testDialog.render(batch);
 		}
@@ -165,6 +166,14 @@ public class Player {
 
 		font.setColor(1f-stam, 1f*stam, 0f, 1f);
 		font.draw(batch, "STAMINA: " + (int) this.stamina, x-hw+90, y+hh*2-150);
+	}
+	
+	private void drawDistanceWalked(SpriteBatch batch) {
+		int hw = Gdx.graphics.getWidth()/2;
+		int hh = Gdx.graphics.getHeight()/2;
+		
+		font.setColor(1f, 1f, 1f, 1f);
+		font.draw(batch, "Distance: " + (x/40) + "m", x-hw+90, y+hh*2-180);
 	}
 
 	private void calculateAge() {
