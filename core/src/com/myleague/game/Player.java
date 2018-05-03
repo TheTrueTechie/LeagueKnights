@@ -103,7 +103,7 @@ public class Player {
 			}
 		}
 		
-		if (attackTimer > attackLength * 0.33 && attackTimer < attackLength * 0.66) {
+		if (anim.equals("attack") && attackTimer > attackLength * 0.33 && attackTimer < attackLength * 0.66) {
 			checkForEnemyHit();
 		}
 		batch.setProjectionMatrix(camera.combined);
@@ -159,7 +159,9 @@ public class Player {
 		if (anim.equals("attack")) {
 			ret = knightSlashAnim.getKeyFrame(elapsedTime, false);
 		} else if (anim.equals("block")) {
-			ret = knightBlockAnim.getKeyFrame(elapsedTime, false);
+			ret = knightBlockAnim.getKeyFrame(1, true);
+		} else if (anim.equals("cancelBlock")) {
+			ret = knightBlockAnim.getKeyFrame(1-elapsedTime, false);
 		} else if (anim.equals("walk")) {
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
 		} else if (anim.equals("run")) {
@@ -201,6 +203,24 @@ public class Player {
 			attackTimer = attackLength;
 			elapsedTime = 0;
 			SoundHandler.playSlash();
+		}
+	}
+	
+	public void block() {
+		if (!isDying) {
+			anim = "block";
+			attackTimer = 5000;
+			elapsedTime = 0;
+			SoundHandler.playSlash();
+		}
+	}
+	
+	public void cancelBlock() {
+		if (!isDying) {
+			anim = "cancelBlock";
+			attackTimer = attackLength/2;
+			elapsedTime = 0;
+			//SoundHandler.playSlash();
 		}
 	}
 	
@@ -261,7 +281,6 @@ public class Player {
 	public void controlsMKB() {
 		System.out.println(Gdx.input.isButtonPressed(Input.Buttons.LEFT));
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && attackTimer <= 0) {
-			System.out.println("LMB");
 			anim = "attack";
 			attackTimer = attackLength;
 			elapsedTime = 0;
@@ -311,6 +330,9 @@ public class Player {
 	}
 
 	public void takeDamage(int dmg) {
+		if(anim.equals("block")) {
+			dmg/=6;
+		}
 		this.age += dmg;
 		calculateHealth();
 	}

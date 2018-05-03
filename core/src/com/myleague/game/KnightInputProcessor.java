@@ -79,12 +79,18 @@ public class KnightInputProcessor implements InputProcessor {
 		if (button == Input.Buttons.LEFT) {
 			player.attack();
 		}
+		if (button == Input.Buttons.RIGHT) {
+			player.block();
+		}
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
+		if (button == Input.Buttons.RIGHT) {
+			player.cancelBlock();
+		}
 		return false;
 	}
 
