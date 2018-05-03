@@ -395,6 +395,14 @@ public class Player {
 	public float getElapsedTime() {
 		return this.elapsedTime;
 	}
+	
+	public int getVelocity() {
+		return this.velocity;
+	}
+	
+	public int getAttackTimer() {
+		return this.attackTimer;
+	}
 
 	public OrthographicCamera getCamera() {
 		return this.camera;
