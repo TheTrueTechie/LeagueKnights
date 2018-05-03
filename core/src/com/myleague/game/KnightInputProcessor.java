@@ -16,8 +16,8 @@ public class KnightInputProcessor implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
-		if (player.attackTimer < 0) {
-			int move = player.velocity;
+		if (player.getAttackTimer() <= 0) {
+			int move = player.getVelocity();
 			if (keycode == Input.Keys.A) {
 				move = -1;
 			} else if (keycode == Input.Keys.D) {
