@@ -33,6 +33,7 @@ public class Player {
 	float age = 0;
 	float lifespan = 100;
 	float health = 100;
+	float stamina = 100;
 	boolean isFacingRight = true;
 	boolean isDying = false;
 	int attackTimer = 0;
@@ -113,12 +114,16 @@ public class Player {
 		idleTimer--;
 
 		drawHealthBar(batch);
+		drawStaminaBar(batch);
 		if(age > 100 && age < 250 || showingDialog) {
 			testDialog.render(batch);
 		}
 		// drawShapes(batch);
 	}
 	
+	/*
+	 * Draws a health bar in the top left corner of the screen
+	 */
 	private void drawHealthBar(SpriteBatch batch) {
 		int hw = Gdx.graphics.getWidth()/2;
 		int hh = Gdx.graphics.getHeight()/2;
@@ -139,6 +144,28 @@ public class Player {
 		font.setColor(1f-hp, 1f*hp, 0f, 1f);
 		font.draw(batch, "HEALTH: " + (int) this.health, x-hw+90, y+hh*2-100);
 	}
+	
+	private void drawStaminaBar(SpriteBatch batch) {
+		int hw = Gdx.graphics.getWidth()/2;
+		int hh = Gdx.graphics.getHeight()/2;
+		float stam = this.stamina/100;
+		float hp = this.health/100;
+		batch.end();
+		
+		sr.begin(ShapeType.Filled);
+		sr.setColor(1f-hp, 1f-hp, 1f-hp, 1f);
+		sr.rect(10-hw, hh-85, 180, 30);	
+		sr.end();
+		sr.begin(ShapeType.Filled);
+		sr.setColor(0, 0, 1f, 1f);
+		sr.rect(15-hw, hh-80, Math.max(170*stam, 0), 20);	
+		sr.end();
+		
+		batch.begin();
+
+		font.setColor(1f-stam, 1f*stam, 0f, 1f);
+		font.draw(batch, "STAMINA: " + (int) this.stamina, x-hw+90, y+hh*2-150);
+	}
 
 	private void calculateAge() {
 		// TODO Auto-generated method stub
@@ -153,23 +180,38 @@ public class Player {
 			isDying = true;
 		}
 	}
+	
+	private void drainStamina(int value) {
+		float stam = Gdx.graphics.getDeltaTime()*value;
+		this.stamina -= stam;
+	}
+	
+	private void gainStamina(int value) {
+		float stam = Gdx.graphics.getDeltaTime()*value;
+		this.stamina = Math.min(this.stamina + stam, 100);
+	}
 
 	public TextureRegion getAnimation() {
 		TextureRegion ret;
-		if (anim.equals("attack")) {
+		if (anim.equals("attack")&& this.stamina > 0) {
 			ret = knightSlashAnim.getKeyFrame(elapsedTime, false);
-		} else if (anim.equals("block")) {
+			drainStamina(5);
+		} else if (anim.equals("block")&&this.stamina > 0) {
 			ret = knightBlockAnim.getKeyFrame(1, true);
+			drainStamina(3);
 		} else if (anim.equals("cancelBlock")) {
 			ret = knightBlockAnim.getKeyFrame(1-elapsedTime, false);
 		} else if (anim.equals("walk")) {
 			ret = knightWalkAnim.getKeyFrame(elapsedTime, true);
-		} else if (anim.equals("run")) {
+			gainStamina(1);
+		} else if (anim.equals("run")&& this.stamina > 0) {
 			ret = knightRunAnim.getKeyFrame(elapsedTime, true);
+			drainStamina(2);
 		} else if (anim.equals("death")) {
 			ret = knightDeathAnim.getKeyFrame(elapsedTime, false);
 		} else {
 			ret = knightIdleAnim.getKeyFrame(elapsedTime, true);
+			gainStamina(4);
 		}
 
 		if (!isFacingRight && !ret.isFlipX()) {
@@ -198,7 +240,7 @@ public class Player {
 	}
 
 	public void attack() {
-		if (!isDying) {
+		if (!isDying && this.stamina > 5) {
 			anim = "attack";
 			attackTimer = attackLength;
 			elapsedTime = 0;
@@ -207,7 +249,7 @@ public class Player {
 	}
 	
 	public void block() {
-		if (!isDying) {
+		if (!isDying && this.stamina > 5) {
 			anim = "block";
 			attackTimer = 5000;
 			elapsedTime = 0;
@@ -264,7 +306,7 @@ public class Player {
 	}
 
 	public void runningInput() {
-		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && velocity > 0) {
+		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && velocity > 0 && this.stamina > 1) {
 			anim = "run";
 			setVelocity(walkSpeed * 8);
 		}
@@ -332,6 +374,7 @@ public class Player {
 	public void takeDamage(int dmg) {
 		if(anim.equals("block")) {
 			dmg/=6;
+			drainStamina(60);
 		}
 		this.age += dmg;
 		calculateHealth();
