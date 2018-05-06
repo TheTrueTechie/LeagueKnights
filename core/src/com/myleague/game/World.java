@@ -22,7 +22,7 @@ public class World {
 
 	TextureAtlas grassTilesAtlas;
 	Animation<TextureRegion> grassTiles;
-	
+	Tile[][] t = new Tile[9][9];
 	ArrayList<Tile> ground = new ArrayList<Tile>();
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	Random gen = new Random();

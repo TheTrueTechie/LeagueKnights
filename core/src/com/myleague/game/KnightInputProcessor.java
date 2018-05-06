@@ -28,7 +28,7 @@ public class KnightInputProcessor implements InputProcessor {
 		
 		
 		if(keycode == 59) {
-			player.setSprintValue(8);
+			player.setSprintValue(3);
 		}
 		if(keycode == Input.Keys.UP) {
 			player.takeDamage(-500);

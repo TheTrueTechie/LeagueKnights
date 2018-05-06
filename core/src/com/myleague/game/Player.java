@@ -97,7 +97,7 @@ public class Player {
 			x += moveVal;
 			if (Math.abs(moveVal) == 1) {
 				setAnim("walk");
-			} else if (sprintValue == 8) {
+			} else if (sprintValue != 1) {
 				setAnim("run");
 			} else {
 				setAnim("idle");
